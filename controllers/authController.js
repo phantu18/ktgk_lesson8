@@ -4,8 +4,8 @@ import bcrypt from "bcrypt";
 
 export const register = async (req, res) => {
   try {
-    const { userName, password } = req.body;
-    const user = new User({ userName, password });
+    const { username, password } = req.body;
+    const user = new User({ username, password });
     await user.save();
     res.status(201).json({ message: "Tạo Tài Khoản Thành Công!!!" });
   } catch (error) {
@@ -15,8 +15,8 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { userName, password } = req.body;
-    const user = await User.findOne({ userName });
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
     if (!user) {
       return res.status(401).json({ message: "Thông Tin Không Xác Định!!" });
     }
