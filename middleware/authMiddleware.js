@@ -2,16 +2,28 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 const authMiddleware = async (req, res, next) => {
-  const token = req.header("Authorization").replace("Bearer ", "");
+  const authHeader = req.header("Authorization");
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res
+      .status(401)
+      .json({ message: "Token không hợp lệ hoặc không được cung cấp" });
+  }
+
+  const token = authHeader.replace("Bearer ", "");
+
   try {
     const decoded = jwt.verify(token, "secretKey");
     req.user = await User.findById(decoded.userId);
+
     if (!req.user) {
-      throw new Error();
+      return res.status(404).json({ message: "Người dùng không tồn tại" });
     }
+
     next();
   } catch (error) {
-    res.status(401).json({ message: "Chưa xác định token!!" });
+    console.error(error);
+    res.status(401).json({ message: "Xác thực không thành công" });
   }
 };
 

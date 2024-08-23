@@ -11,7 +11,7 @@ export const getProfile = async (req, res) => {
 
 export const createProfile = async (req, res) => {
   try {
-    const profile = new Profile({ ...req.body, user_id: req.user._id });
+    const profile = new Profile({ ...req.body });
     await profile.save();
     res.status(201).json(profile);
   } catch (error) {
