@@ -6,7 +6,6 @@ export const createWorkExperience = async (req, res) => {
     const { profile_id } = req.body;
     const profile = await Profile.findOne({
       _id: profile_id,
-      user_id: req.user._id,
     });
     if (!profile) {
       return res.status(403).json({
@@ -28,7 +27,6 @@ export const updateWorkExperience = async (req, res) => {
     const workExperience = await WorkExperience.findById(id);
     const profile = await Profile.findOne({
       _id: workExperience.profile_id,
-      user_id: req.user._id,
     });
     if (!profile) {
       return res
@@ -53,7 +51,6 @@ export const deleteWorkExperience = async (req, res) => {
     const workExperience = await WorkExperience.findById(id);
     const profile = await Profile.findOne({
       _id: workExperience.profile_id,
-      user_id: req.user._id,
     });
     if (!profile) {
       return res

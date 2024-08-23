@@ -22,7 +22,7 @@ export const createProfile = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const profile = await Profile.findOneAndUpdate(
-      { _id: req.params.id, user_id: req.user._id },
+      { _id: req.params.id },
       req.body,
       { new: true }
     );
@@ -39,7 +39,6 @@ export const deleteProfile = async (req, res) => {
   try {
     const profile = await Profile.findOneAndDelete({
       _id: req.params.id,
-      user_id: req.user._id,
     });
     if (!profile) {
       return res.status(403).json({ message: "Not authorized" });

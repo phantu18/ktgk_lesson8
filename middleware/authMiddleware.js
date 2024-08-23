@@ -5,9 +5,7 @@ const authMiddleware = async (req, res, next) => {
   const authHeader = req.header("Authorization");
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res
-      .status(401)
-      .json({ message: "Token không hợp lệ hoặc không được cung cấp" });
+    return res.status(401).json({ message: "Token không hợp lệ" });
   }
 
   const token = authHeader.replace("Bearer ", "");
